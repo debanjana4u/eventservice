@@ -1,0 +1,22 @@
+openapi: 3.0.1
+servers:  
+  - url : 'https://api.microworld.com/'
+    description: Production Server
+info:
+  description: 'Event Service Model'    
+  title: Event Se
+  version: '1.0'
+paths:
+  /microworld/event/v1:
+    get:
+      summary: List all API resources
+      description: 
+      tags: 
+        - Example
+      parameters: 
+        - description: Unique Event ID
+          in: query
+          name: eventId
+          required: true
+          schema: 
+            type: Integer

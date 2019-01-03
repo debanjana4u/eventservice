@@ -1,0 +1,121 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Event Mangement System
+  license:
+    name: user
+host: event.swagger.io
+basePath: /v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /events:
+    get:
+      summary: List all events
+      operationId: listEvents
+      tags:
+        - events
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: End Date of the event
+          type: string
+        - name: endDate
+          in: query
+          required: true
+          description: Start Date of the event
+          type: string
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: A paged array of events
+          headers:
+            x-next:
+              type: string
+              description: A link to the next page of responses
+          schema:
+            $ref: '#/definitions/Events'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /event:
+    post:
+      summary: Create an event
+      operationId: createEvents
+      tags:
+        - events
+      responses:
+        "201":
+          description: Null response
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /events/{id}:
+    get:
+      summary: Info for a specific event
+      operationId: showByEventId
+      tags:
+        - events
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the event to retrieve
+          type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          schema:
+            $ref: '#/definitions/Events'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Event:
+    required:
+      - eventId
+      - eventHolderEmail
+    properties:
+      eventId:
+        type: integer
+        format: int64
+      eventHolderEmail:
+        type: string
+      tag:
+        type: string
+      startDate:
+        type: object
+      endDate:
+        type: object
+      zipCode:
+        type: integer
+      eventType:
+        type: string
+        enum: ["1","2"]
+  Events:
+    type: array
+    items:
+      $ref: '#/definitions/Event'
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
