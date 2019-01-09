@@ -23,12 +23,12 @@ paths:
         - name: startDate
           in: query
           required: true
-          description: End Date of the event
+          description: Start Date of the event
           type: string
         - name: endDate
           in: query
           required: true
-          description: Start Date of the event
+          description: End Date of the event
           type: string
         - name: limit
           in: query

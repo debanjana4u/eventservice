@@ -10,7 +10,7 @@ import java.util.Objects;
 @Data
 public class Event {
 
-    private int eventId;
+    private String eventId;
     private Date startDate;
     private Date endDate;
     private String eventHolderEmail;
