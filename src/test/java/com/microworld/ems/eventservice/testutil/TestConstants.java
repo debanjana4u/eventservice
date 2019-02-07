@@ -1,6 +1,7 @@
 package com.microworld.ems.eventservice.testutil;
 
 import com.microworld.ems.eventservice.model.Event;
+import com.microworld.ems.eventservice.model.EventsTable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,5 +30,10 @@ public class TestConstants {
         myEvent.setEndDate(new Date());
         eventList.add(myEvent);
         return eventList;
+    }
+
+    public static EventsTable getAnEventFromDB(){
+        EventsTable myEvent = new EventsTable(UUID.randomUUID().toString(),new Date(),new Date(),"debanjana4u@gmail.com",Integer.valueOf(1000),"MARRIAGE");
+        return myEvent;
     }
 }

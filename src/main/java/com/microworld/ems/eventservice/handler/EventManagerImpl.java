@@ -1,6 +1,8 @@
 package com.microworld.ems.eventservice.handler;
 
 import com.microworld.ems.eventservice.model.Event;
+import com.microworld.ems.eventservice.repository.EventInfoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
@@ -11,9 +13,13 @@ import java.util.UUID;
 
 @Component
 public class EventManagerImpl implements EventManager {
-    @Override
-    public void bookEvent() {
 
+    @Autowired
+    private EventInfoRepository eventInfoRepository;
+
+    @Override
+    public String bookEvent(Event event) {
+        return eventInfoRepository.save(event.getEventRespositoryModel()).getEventId();
     }
 
     @Override

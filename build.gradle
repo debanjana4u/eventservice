@@ -56,6 +56,10 @@ dependencies {
     //implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     //implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
 //	implementation('org.springframework.cloud:spring-cloud-starter-netflix-ribbon')
+   // compile ('org.springframework.data:spring-data-jpa:Hopper-SR10')
+    compile ('com.amazonaws:aws-java-sdk-dynamodb:1.11.34')
+    compile ('com.github.derjust:spring-data-dynamodb:5.0.4')
+    compile group: 'org.springframework.data', name: 'spring-data-releasetrain', version: 'Hopper-SR10', ext: 'pom'
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
 //	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     compileOnly 'org.projectlombok:lombok:1.18.4'

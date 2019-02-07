@@ -102,7 +102,7 @@ definitions:
         type: object
       zipCode:
         type: integer
-      eventType:
+      EventInfoRepository:
         type: string
         enum: ["1","2"]
   Events:

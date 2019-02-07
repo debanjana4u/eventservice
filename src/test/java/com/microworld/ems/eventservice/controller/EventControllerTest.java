@@ -1,5 +1,6 @@
 package com.microworld.ems.eventservice.controller;
 
+import com.microworld.ems.eventservice.exception.ValidationException;
 import com.microworld.ems.eventservice.handler.EventManager;
 import com.microworld.ems.eventservice.model.Event;
 import com.microworld.ems.eventservice.testutil.TestConstants;
@@ -9,11 +10,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
@@ -56,24 +60,30 @@ public class EventControllerTest {
         assertNotNull(returnedEventList);
     }
 
-   // @Test
+   @Test(expected = ValidationException.class)
     public void testGetEventsByDate_LimitValidation_400_Response() throws Exception {
         OffsetDateTime startDate = OffsetDateTime.parse("2018-10-26T12:00-06:00");
         OffsetDateTime endDate = OffsetDateTime.now();
-        when(eventManager.findEventList(startDate,endDate,-1)).thenReturn(TestConstants.getEventList());
         List<Event> returnedEventList = eventController.getEventsByDate("2018-10-26T12:00-06:00",endDate.toString(),-1);
         verify(eventManager, times(1)).findEventList(startDate,endDate,-1);
         assertNotNull(returnedEventList);
     }
 
-   // @Test
+   @Test(expected = ValidationException.class)
     public void testGetEventsByDate_DateValidation_400_Response() throws Exception {
         OffsetDateTime startDate = OffsetDateTime.now();
         OffsetDateTime endDate = OffsetDateTime.parse("2018-10-26T12:00-06:00");
-        when(eventManager.findEventList(startDate,endDate,100)).thenReturn(TestConstants.getEventList());
         List<Event> returnedEventList = eventController.getEventsByDate(startDate.toString(), endDate.toString(),100);
         verify(eventManager, times(1)).findEventList(startDate,endDate,100);
         assertNotNull(returnedEventList);
+    }
+
+    @Test
+    public void testCreateEvent_Ok_Response() throws Exception {
+        when(eventManager.bookEvent(Mockito.any())).thenReturn(Mockito.anyString());
+        ResponseEntity<?> responseEntity = eventController.createEvent(TestConstants.getAnEvent());
+        assertEquals(responseEntity.getStatusCode(), HttpStatus.ACCEPTED);
+       // verify(eventManager, times(1)).bookEvent(TestConstants.getAnEvent());
     }
 
 }

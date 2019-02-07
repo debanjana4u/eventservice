@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface EventManager {
 
-    public void bookEvent();
+    public String bookEvent(Event event);
 
     public Event findEventById(String id);
 
