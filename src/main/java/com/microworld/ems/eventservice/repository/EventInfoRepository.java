@@ -9,8 +9,9 @@ import java.util.List;
 @EnableScan
 public interface EventInfoRepository extends CrudRepository<EventsTable,String> {
 
-    public EventsTable save(EventsTable event);
+     EventsTable save(EventsTable event);
 
-    public List<EventsTable> findAll();
+     List<EventsTable> findAll();
+
 
 }

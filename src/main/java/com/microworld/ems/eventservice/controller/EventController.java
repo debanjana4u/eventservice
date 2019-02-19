@@ -43,6 +43,7 @@ public class EventController {
     @RequestMapping(value = "/events/{id}", method = RequestMethod.GET)
     public Event findById(@PathVariable("id") String id) {
         Event event = eventManager.findEventById(id);
+        System.out.println("######### Controller, event returned = " + event);
         return event;
     }
 
