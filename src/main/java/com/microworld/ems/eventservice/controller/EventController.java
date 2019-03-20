@@ -21,24 +21,21 @@ public class EventController {
         this.eventManager = eventManager;
     }
 
-    @RequestMapping(value = "/events", method = RequestMethod.GET)
-    public List<Event> getEventsByDate(@RequestParam(value = "startDate", required = true) String startDate,
-                                       @RequestParam(value = "endDate", required = true) String endDate,
-                                       @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
-        //return "Hello World!";
-        OffsetDateTime startDt = OffsetDateTime.parse(startDate);
-        OffsetDateTime endDt = OffsetDateTime.parse(endDate);
-        if (limit <= 0) {
-            throw new ValidationException("Limit should be greater than 0.");
-        }
-        if (endDt.isBefore(startDt)) {
-            throw new ValidationException("Event End Date should be greater than Start date");
-        }
-
-
-        List<Event> eventsList = eventManager.findEventList(startDt, endDt, limit);
-        return eventsList;
-    }
+//    @RequestMapping(value = "/events", method = RequestMethod.GET)
+//    public List<Event> getEventsByDate(@RequestParam(value = "startDate", required = true) String startDate,
+//                                       @RequestParam(value = "endDate", required = true) String endDate,
+//                                       @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
+//        OffsetDateTime startDt = OffsetDateTime.parse(startDate);
+//        OffsetDateTime endDt = OffsetDateTime.parse(endDate);
+//        if (limit <= 0) {
+//            throw new ValidationException("Limit should be greater than 0.");
+//        }
+//        if (endDt.isBefore(startDt)) {
+//            throw new ValidationException("Event End Date should be greater than Start date");
+//        }
+//        List<Event> eventsList = eventManager.findEventListByDates(startDt, endDt, limit);
+//        return eventsList;
+//    }
 
     @RequestMapping(value = "/events/{id}", method = RequestMethod.GET)
     public Event findById(@PathVariable("id") String id) {
@@ -51,6 +48,13 @@ public class EventController {
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         String response = eventManager.bookEvent(event);
         return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/events", method = RequestMethod.GET)
+    public List<Event> getEventaByEmailAndType(@RequestParam(value = "eventHolderEmail", required = true) String eventHolderEmail,
+                                       @RequestParam(value = "eventType", required = true) String eventType) {
+        List<Event> eventsList = eventManager.findEventsByEmailAndType(eventHolderEmail, eventType);
+        return eventsList;
     }
 
 }

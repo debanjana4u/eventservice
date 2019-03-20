@@ -1,6 +1,7 @@
 package com.microworld.ems.eventservice.handler;
 
 import com.microworld.ems.eventservice.model.Event;
+import com.microworld.ems.eventservice.model.EventsTable;
 import com.microworld.ems.eventservice.repository.EventInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,17 @@ public class EventManagerImpl implements EventManager {
     }
 
     @Override
+    public  List<Event> findEventsByEmailAndType(String eventHolderEmail, String eventType){
+        List<EventsTable> eventsTableList =  eventInfoRepository.findByEmailAddressAndType(eventHolderEmail, eventType);
+        List<Event> eventList = new ArrayList<Event>();
+        for (EventsTable eventsTable: eventsTableList){
+            eventList.add(Event.getEvent(eventsTable));
+        }
+        //Convert EventsTable to events
+        return eventList;
+    }
+
+    @Override
     public void findEventByZipCodes() {
 
     }
@@ -37,19 +49,14 @@ public class EventManagerImpl implements EventManager {
 
     }
 
-    @Override
-    public List<Event> findEventList(OffsetDateTime startDate, OffsetDateTime endDate, int limit){
-        List <Event> eventList = new ArrayList<Event>();
-
-//        Event myEvent = new Event();
-//        myEvent.setEventId(Integer.valueOf(100));
-//        myEvent.setEventHolderEmail("debanjana4u@gmail.com");
-//        myEvent.setZipCode(Integer.valueOf(1000));
-//        myEvent.setStartDate(new Date());
-//        myEvent.setEndDate(new Date());
-//        eventList.add(myEvent);
-
-
-    return eventList;
-    }
+//    @Override
+//    public List<Event> findEventListByDates(OffsetDateTime startDate, OffsetDateTime endDate, int limit){
+//        List<EventsTable> eventsTableList =  eventInfoRepository.findEventsByDates(startDate, endDate, limit);
+//        List<Event> eventList = new ArrayList<Event>();
+//        for (EventsTable eventsTable: eventsTableList){
+//            eventList.add(Event.getEvent(eventsTable));
+//        }
+//         //Convert EventsTable to events
+//    return eventList;
+//    }
 }

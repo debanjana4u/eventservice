@@ -7,11 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 @EnableScan
-public interface EventInfoRepository extends CrudRepository<EventsTable,String> {
+public interface EventInfoRepository extends CrudRepository<EventsTable,String>, EventInfoAdditionalRepository{
 
      EventsTable save(EventsTable event);
 
      List<EventsTable> findAll();
-
 
 }

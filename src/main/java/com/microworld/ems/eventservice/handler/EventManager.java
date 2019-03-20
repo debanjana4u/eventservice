@@ -16,6 +16,8 @@ public interface EventManager {
 
     public void findAvailabilityByDates();
 
-    public List<Event> findEventList(OffsetDateTime startDate, OffsetDateTime endDate, int limit);
+//    public List<Event> findEventListByDates(OffsetDateTime startDate, OffsetDateTime endDate, int limit);
+
+    public  List<Event> findEventsByEmailAndType(String eventHolderEmail, String eventType);
 
 }

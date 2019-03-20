@@ -1,0 +1,29 @@
+//To run DynamoDB locally
+java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
+
+//AWS CLI command to create table
+aws dynamodb create-table \
+--endpoint-url http://localhost:8000 \
+--table-name EventInfo \
+--attribute-definitions \
+  AttributeName=eventId,AttributeType=S \
+  AttributeName=eventType,AttributeType=S \
+  AttributeName=eventHolderEmail,AttributeType=S \
+--key-schema \
+  AttributeName=eventId,KeyType=HASH \
+--global-secondary-indexes IndexName=Event_Index,KeySchema=["{AttributeName=eventHolderEmail,KeyType=HASH}","{AttributeName=eventType,KeyType=RANGE}"],Projection="{ProjectionType=INCLUDE ,NonKeyAttributes=["key"]}",ProvisionedThroughput="{ReadCapacityUnits=10,WriteCapacityUnits=10}" \
+--provisioned-throughput \
+  ReadCapacityUnits=1,WriteCapacityUnits=1
+
+//AWS CLI command to delete table
+aws dynamodb delete-table --endpoint-url http://localhost:8000 --table-name EventInfo
+
+//AWS CLI command to scan table
+aws dynamodb scan --endpoint-url http://localhost:8000 --table-name EventInfo --filter-expression "eventHolderEmail = :email" --expression-attribute-values '{":email":{"S":"debanjana4u@gmail.com"}}'
+
+//AWS CLI command to query table
+aws dynamodb query --endpoint-url http://localhost:8000 --table-name EventInfo --index-name "Event_Index"
+--key-condition-expression "#eventHolderEmail = :eventHolderEmail and #eventType = :eventType"
+--expression-attribute-names '{"#eventHolderEmail" : "eventHolderEmail","#eventType" : "eventType"}'
+--expression-attribute-values '{":eventHolderEmail":{"S":"debanjana4u@gmail.com"},":eventType":{"S":"BIRTHDAY"}}'
+

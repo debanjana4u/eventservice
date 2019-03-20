@@ -29,7 +29,6 @@ public class Event {
         return eventsTable;
     }
 
-
     public static Event getEvent(EventsTable eventsTable){
         System.out.println("############ " + eventsTable );
         return Event.builder()
