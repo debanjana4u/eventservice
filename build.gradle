@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.0.RELEASE'
+        springBootVersion = '2.0.2.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -17,6 +17,7 @@ apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+//apply plugin: 'net.ltgt.apt'
 
 group = 'com.microworld.ems'
 version = '0.0.1-SNAPSHOT'
@@ -63,6 +64,7 @@ dependencies {
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
 //	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.cloud:spring-cloud-starter-contract-stub-runner')
     testImplementation('org.springframework.cloud:spring-cloud-starter-contract-verifier')
